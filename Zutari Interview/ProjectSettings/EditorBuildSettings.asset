@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 3874cc821acb4514f8120706428c934a
+  - enabled: 1
+    path: Assets/Scenes/Level One.unity
+    guid: 493bd169f1e686c40aa420d7663ce8ee
+  - enabled: 1
+    path: Assets/Scenes/WeatherApp.unity
+    guid: b14ade9b77800af4caec282f5dde79cf
   m_configObjects: {}
