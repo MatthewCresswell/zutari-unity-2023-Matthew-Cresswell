@@ -22,26 +22,25 @@ public class ScreenBoundary : MonoBehaviour
         boxCollider.isTrigger = true; //makes sure the collider is set to trigger
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        transform.position = Vector3.zero;
+        transform.position = Vector3.zero;//center cube
         UpdateBoundarySize();
     }
 
-    public void UpdateBoundarySize()
+    public void UpdateBoundarySize()//checks & updates size of screen boundaries
     {
         float cameraHeight = mainCamera.orthographicSize * 2;
         Vector2 boxColliderSize = new Vector2(cameraHeight * mainCamera.aspect, cameraHeight);
         boxCollider.size = boxColliderSize;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)//Invoke a collision event when the object triggers a collision
     {
         ExitColliderEvent?.Invoke(collision);
     }
 
-    public bool IsOutOfBounds(Vector3 worldPos)
+    public bool IsOutOfBounds(Vector3 worldPos)//Check if the cube is out of bounds by comparing cubes x,y position to the min x,y boundaries
     {
         return
             Mathf.Abs(worldPos.x) > Mathf.Abs(boxCollider.bounds.min.x) || 
@@ -54,16 +53,16 @@ public class ScreenBoundary : MonoBehaviour
         bool yBoundResult = Mathf.Abs(worldPosition.y) > (Mathf.Abs(boxCollider.bounds.min.y) - cornerOffset);
         Vector2 signWorldPosition = new Vector2(Mathf.Sign(worldPosition.x), Mathf.Sign(worldPosition.y));
 
-        if(xBoundResult && yBoundResult) // corner
+        if(xBoundResult && yBoundResult) // if cube is in corner
         {
             return Vector2.Scale(worldPosition, Vector2.one * -1) + Vector2.Scale(new Vector2(teleportOffset, teleportOffset), signWorldPosition);
         }
-        else if (xBoundResult) // x-axis
+        else if (xBoundResult) // if cube passes x-axis edges of screen
         {
             return new Vector2(worldPosition.x * -1, worldPosition.y)
              + new Vector2(teleportOffset * signWorldPosition.x, teleportOffset);
         }
-        else if (yBoundResult)
+        else if (yBoundResult) // if cube passes y-axis edges of screen
         {
             return new Vector2(worldPosition.x, worldPosition.y * -1)
             + new Vector2(teleportOffset, teleportOffset * signWorldPosition.y);
